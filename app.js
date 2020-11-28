@@ -9,6 +9,7 @@ const session = require('express-session');
 const validator = require('express-validator');
 
 const mongoose = require('mongoose');
+const mysql = require('./mapp/database/mysql');
 const pathConfig = require('./path');
 
 //define path
@@ -20,7 +21,6 @@ global.__path_routers = __path_app + pathConfig.folder_routers + '/'
 global.__path_schemas = __path_app + pathConfig.folder_schemas + '/'
 global.__path_validates = __path_app + pathConfig.folder_validates + '/'
 global.__path_views = __path_app + pathConfig.folder_views + '/'
-
 
 const systemConfig = require(__path_configs + 'system');
 const databaseConfig = require(__path_configs + 'database');
@@ -53,11 +53,10 @@ app.set('layout', __path_views + 'backend');
 //app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'bootstrap')));
 app.use(expressLayouts);
 
 app.locals.systemConfig = systemConfig
-
 app.use(`/${systemConfig.prefixAdmin}`, require('./mapp/routes/backend/index'));
 app.use('/', require('./mapp/routes/frontend/index'));
 
@@ -74,13 +73,11 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  console.log('path : ' + __path_views + 'pages/error')
   res.render(__path_views + 'pages/error', { pageTitle: 'Page Not Found' });
 });
 
-//////////
-//const uri = 'mongodb+srv://anhho:Holeanh@123@cluster0.nthqi.gcp.mongodb.net/zendvn?retryWrites=true&w=majority'
 const uri = `mongodb://localhost:27017/${databaseConfig.database}`
+
 
 mongoose.connect(uri, {
   useNewUrlParser: true,
@@ -91,4 +88,4 @@ mongoose.connect(uri, {
   })
   .catch(err => console.log(err))
 
-module.exports = app;
+module.exports = app

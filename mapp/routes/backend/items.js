@@ -4,7 +4,7 @@ const util = require('util');
 
 const notify = require(__path_configs + 'notify');
 const systemConfig = require(__path_configs + 'system');
-const itemsModel = require(__path_schemas + 'items')
+const itemsModel = require(__path_schemas + 'features')
 const utilsHelpers = require(__path_helpers + 'utils')
 const paramsHelpers = require(__path_helpers + 'params');
 const validatorItems = require(__path_validates + 'items');
@@ -40,6 +40,7 @@ router.get('(/status/:status)?', async (req, res, next) => {
     .limit(pagination.totalItemsPerPage)
     .sort({ ordering: 'asc' })
     .then((items) => {
+      console.log({items})
       res.render(`${folderView}list`, {
         pageTitle: 'Item List Page',
         items,

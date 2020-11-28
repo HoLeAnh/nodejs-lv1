@@ -1,4 +1,4 @@
 module.exports = {
-    database: 'zendvn',
+    database: 'Automation',
     col_item: 'items'
 }

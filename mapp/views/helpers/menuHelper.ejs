@@ -1,0 +1,80 @@
+<%
+    menuHelper = (currentMenu,currentSubMenu) => {
+        let menu = [
+            {value : 'Feature' , type:'1'},
+            {value : 'Project' , type:'3' , subItems: [{value : 'List'},{value : 'Form'}]},
+            {value : 'Feature' , type:'3' , subItems: [{value : 'List'},{value : 'Form'}]},
+            {value : 'Testcase' , type:'3' , subItems: [{value : 'List'},{value : 'Form'}]},
+            {value : 'Account' , type:'3' , subItems: [{value : 'List'},{value : 'Form'}]},
+            {value : 'Test' , type:'1'},
+            {value : 'Testplan' , type:'2'},
+            {value : 'Execute', type:'2'},
+            {value : 'RunTest', type:'2'}
+        ]
+        let link=''
+        let xhtmlMenu = ''
+        menu.forEach(item => {
+          if(item.type=='1')
+          {
+            xhtmlMenu += `<hr class="sidebar-divider">`
+            xhtmlMenu += `<div class="sidebar-heading">${item.value}</div>`
+          }
+          else if(item.type=='3')
+          {
+            if(currentMenu.toLowerCase().includes(item.value.toLowerCase())){
+              xhtmlMenu += `<li class="nav-item active">
+                              <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapse${item.value}" aria-expanded="true" aria-controls="collapseUtilities">
+                                <i class="fas fa-fw fa-wrench"></i>
+                                <span>${item.value}</span>
+                              </a>
+                              <div id="collapse${item.value}" class="collapse show" aria-labelledby="heading${item.value}" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">`
+              item.subItems.forEach(subItem => {
+                if(currentSubMenu.toLowerCase().includes(subItem.value.toLowerCase())){
+                  xhtmlMenu +=`<a class="collapse-item active" href="${"/"+systemConfig.prefixAdmin+"/"+item.value.toLowerCase()+'s'}">${subItem.value}</a>`
+                }
+                else{
+                  xhtmlMenu +=`<a class="collapse-item" href="${"/"+systemConfig.prefixAdmin+"/"+item.value.toLowerCase()+'s'}">${subItem.value}</a>`
+                }
+              });                  
+              xhtmlMenu += `</div></div></li>`
+            }
+            else{
+              xhtmlMenu += `<li class="nav-item">
+                              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse${item.value}" aria-expanded="true" aria-controls="collapseUtilities">
+                                <i class="fas fa-fw fa-wrench"></i>
+                                <span>${item.value}</span>
+                              </a>
+                              <div id="collapse${item.value}" class="collapse" aria-labelledby="heading${item.value}" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">`
+              item.subItems.forEach(subItem => {
+                  xhtmlMenu +=`<a class="collapse-item" href="${"/"+systemConfig.prefixAdmin+"/"+item.value.toLowerCase()+'s'}">${subItem.value}</a>`
+              });                   
+              xhtmlMenu += `</div></div></li>`
+            }
+            
+          }
+          else{
+              if(currentMenu.toLowerCase().includes(item.value.toLowerCase())){
+                xhtmlMenu += `
+                <li class="nav-item active">
+                    <a class="nav-link" href="${"/"+systemConfig.prefixAdmin+"/"+item.value.toLowerCase()+'s'}">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>${item.value}</span></a>
+                </li>`
+              }
+              else{
+                xhtmlMenu += `
+                <li class="nav-item">
+                    <a class="nav-link" href="${"/"+systemConfig.prefixAdmin+"/"+item.value.toLowerCase()+'s'}">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>${item.value}</span></a>
+                </li>`
+              }
+           
+          }
+        });
+
+    return xhtmlMenu
+}
+%>
