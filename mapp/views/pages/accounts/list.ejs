@@ -1,133 +1,272 @@
 <body id="page-top" height: 100%>
-  <!-- Page Wrapper -->
-  <div id="wrapper">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
 
-    <!-- Sidebar -->
+        <!-- Sidebar -->
 
-    <!-- End of Sidebar -->
+        <!-- End of Sidebar -->
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
 
-      <!-- Main Content -->
-      <div id="content">
+            <!-- Main Content -->
+            <div id="content">
 
-        <!-- Topbar -->
+                <!-- Topbar -->
 
-        <!-- End of Topbar -->
+                <!-- End of Topbar -->
 
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
 
-          <!-- Page Heading -->
-          <h5 class="h3 mb-2 text-gray-800"></h5>
-          <h1 class="h3 mb-2 text-gray-800"><%= currentMenu.toUpperCase()%></h1>
-  
+                    <!-- Page Heading -->
+                    <h5 class="h3 mb-2 text-gray-800"></h5>
+                    <h1 class="h3 mb-2 text-gray-800">
+                        <%= currentMenu.toUpperCase()%>
+                    </h1>
 
 
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>id</th>
+                                            <th>name</th>
+                                            <th>private_key</th>
+                                            <th>address</th>
+                                            <th>validator_key</th>
+                                            <th>public_key</th>
+                                            <th>type</th>
+                                            <th>token</th>
+                                            <th>is_use</th>
+                                            <th>is_verify_tx</th>
+                                            <th>is_remove</th>
+                                            <th>ACTION</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <% accounts.forEach((account , index) => { %>
+                                            <tr>
+                                                <td>
+                                                    <%= account.id%>
+                                                </td>
+                                                <td>
+                                                    <%= account.name%>
+                                                </td>
+                                                <td>
+                                                    <%= account.private_key.substring(0,3)+'...'+account.private_key.substring(account.private_key.length-3,account.private_key.length)%>
+                                                </td>
+                                                <td>
+                                                    <%if (account.address !== null) { %>
+                                                        <%= account.address.substring(0,3)+'...'+account.address.substring(account.address.length-3,account.address.length)%>
+                                                            <% }else{%>
+                                                                <%= account.address%>
+                                                                    <%} %>
+                                                </td>
+                                                <td>
+                                                    <%if (account.validator_key !== null) { %>
+                                                        <%= account.validator_key.substring(0,3)+'...'+account.validator_key.substring(account.validator_key.length-3,account.validator_key.length)%>
+                                                            <% }else{%>
+                                                                <%= account.validator_key%>
+                                                                    <%} %>
+                                                </td>
+                                                <td>
+                                                    <%if (account.public_key !== null) { %>
+                                                        <%= account.public_key.substring(0,3)+'...'+account.public_key.substring(account.public_key.length-3,account.public_key.length)%>
+                                                            <% }else{%>
+                                                                <%= account.public_key%>
+                                                                    <%} %>
+                                                </td>
+                                                <td>
+                                                    <%= account.type%>
+                                                </td>
+                                                <td>
+                                                    <%= account.token%>
+                                                </td>
+                                                <td>
+                                                    <%= account.is_use%>
+                                                </td>
+                                                <td>
+                                                    <%= account.is_verify_tx%>
+                                                </td>
+                                                <td>
+                                                    <%= account.is_remove%>
+                                                </td>
+                                                <th><button onclick="toggle_visibility('detail-popup-<%= account.id%>')">Detail</button></th>
+                                            </tr>
+                                            <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
             </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>id</th>
-                      <th>name</th>
-                      <th>private_key</th>
-                      <th>address</th>
-                      <th>validator_key</th>
-                      <th>public_key</th>
-                      <th>type</th>
-                      <th>token</th>
-                      <th>is_use</th>
-                      <th>is_verify_tx</th>
-                      <th>is_remove</th>
-                      <th>ACTION</th>
-                    </tr>
-                  </thead>
+            <!-- End of Main Content -->
 
-                  <tbody>
-                    <% accounts.forEach((account , index) => { %>
-                    <tr>
-                      <td><%= account.id%></td>
-                      <td><%= account.name%></td>
-                      <td><%= account.private_key.substring(0,3)+'...'+account.private_key.substring(account.private_key.length-3,account.private_key.length)%></td>
-                      <td><%if (account.address !== null) { %>
-                        <%= account.address.substring(0,3)+'...'+account.address.substring(account.address.length-3,account.address.length)%>
-                        <% }else{%>
-                        <%= account.address%>
-                      <%} %></td>    
-                      <td><%if (account.validator_key !== null) { %>
-                          <%= account.validator_key.substring(0,3)+'...'+account.validator_key.substring(account.validator_key.length-3,account.validator_key.length)%>
-                          <% }else{%>
-                          <%= account.validator_key%>
-                      <%} %></td>     
-                      <td><%if (account.public_key !== null) { %>
-                        <%= account.public_key.substring(0,3)+'...'+account.public_key.substring(account.public_key.length-3,account.public_key.length)%>
-                        <% }else{%>
-                        <%= account.public_key%>
-                      <%} %></td>              
-                      <td><%= account.type%></td>
-                      <td><%= account.token%></td>
-                      <td><%= account.is_use%></td>
-                      <td><%= account.is_verify_tx%></td>
-                      <td><%= account.is_remove%></td>
-                      <th><button>View</button></th>
-                    </tr>
-                    <% }) %>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
 
         </div>
-        <!-- /.container-fluid -->
-
-      </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2020</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
+        <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Page Wrapper -->
 
-  </div>
-  <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
     </div>
-  </div>
+    <% accounts.forEach((account , index) => { %>
+        <div class="popup-position" id="detail-popup-<%= account.id%>">
+            <div class="popup-wrapper">
+                <div id="popup-container">
+                    <button style="float: right;" onclick="toggle_visibility('detail-popup-<%= account.id%>-open');">Close
+        Popup</button>
+                    <h5>account Detail</h5>
+                    <form>
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                        <%= account.id%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>name</td>
+                                    <td>
+                                        <%= account.name%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>private_key</td>
+                                    <td>
+                                        <%= account.private_key%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>address</td>
+                                    <td>
+                                        <%= account.address%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>validator_key</td>
+                                    <td>
+                                        <%= account.validator_key%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>public_key</td>
+                                    <td>
+                                        <%= account.public_key%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>type</td>
+                                    <td>
+                                        <%= account.type%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>token</td>
+                                    <td>
+                                        <%= account.token%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>is_use</td>
+                                    <td>
+                                        <%= account.is_use%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>is_verify_tx</td>
+                                    <td>
+                                        <%= account.is_verify_tx%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>is_remove</td>
+                                    <td>
+                                        <%= account.is_remove%>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <% }) %>
 </body>
+
+
+<script>
+    //click detail to open pop-up
+    function toggle_visibility(id) {
+        var modal = document.getElementById(id);
+
+        if (modal.style.display == '' || modal.style.display == 'none') {
+            modal.style.display = 'block';
+            modal.id = modal.id + "-open";
+        } else {
+            modal.id = modal.id.replace('-open', '')
+            modal.style.display = 'none';
+        }
+    }
+    //click out to close pop-up
+    window.onclick = function(event) {
+        var modal = document.querySelector('[id$="-open"]');
+        if (event.target == modal) {
+            modal.id = modal.id.replace('-open', '')
+            modal.style.display = "none";
+        }
+    }
+
+    //click out to close pop-up
+    window.addEventListener('keydown', (function(event) {
+        var modal = document.querySelector('[id$="-open"]');
+        if (event.key === 'Escape') {
+            modal.id = modal.id.replace('-open', '')
+            modal.style.display = "none";
+        }
+    }));
+</script>

@@ -7,7 +7,7 @@ const flash = require('express-flash-notification');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const validator = require('express-validator');
-
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const mysql = require('./mapp/database/mysql');
 const pathConfig = require('./path');
@@ -75,6 +75,8 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render(__path_views + 'pages/error', { pageTitle: 'Page Not Found' });
 });
+
+app.use(bodyParser.urlencoded());
 
 const uri = `mongodb://localhost:27017/${databaseConfig.database}`
 

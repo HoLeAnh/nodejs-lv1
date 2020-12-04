@@ -1,131 +1,379 @@
 <body id="page-top" height: 100%>
-  <!-- Page Wrapper -->
-  <div id="wrapper">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
 
-    <!-- Sidebar -->
+        <!-- Sidebar -->
 
-    <!-- End of Sidebar -->
+        <!-- End of Sidebar -->
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
 
-      <!-- Main Content -->
-      <div id="content">
+            <!-- Main Content -->
+            <div id="content">
 
-        <!-- Topbar -->
+                <!-- Topbar -->
 
-        <!-- End of Topbar -->
+                <!-- End of Topbar -->
 
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
 
-          <!-- Page Heading -->
-          <h5 class="h3 mb-2 text-gray-800"></h5>
-          <h1 class="h3 mb-2 text-gray-800"><%= currentMenu.toUpperCase()%></h1>
-  
+                    <!-- Page Heading -->
+                    <h5 class="h3 mb-2 text-gray-800"></h5>
+                    <h1 class="h3 mb-2 text-gray-800">
+                        <%= currentMenu.toUpperCase()%>
+                    </h1>
 
 
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>id</th>
+                                            <th>name</th>
+                                            <th>type</th>
+                                            <th>token</th>
+                                            <th>acmount</th>
+                                            <th>tx</th>
+                                            <th>tx_out_chain</th>
+                                            <th>result</th>
+                                            <th style="padding-left : 100px ;padding-right:70px ">create_at</th>
+                                            <th>update_at</th>
+                                            <th>err_count</th>
+                                            <th>tx_is_In_Block</th>
+                                            <th>tx_out_chain_success</th>
+                                            <th>step</th>
+                                            <th style="padding-left:70px ;padding-right:70px ">ACTION</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <% testcases.forEach((testcase , index) => { %>
+                                            <tr>
+                                                <td>
+                                                    <%= testcase.id%>
+                                                </td>
+                                                <td>
+                                                    <%= testcase.name%>
+                                                </td>
+                                                <td>
+                                                    <%= testcase.type%>
+                                                </td>
+                                                <td>
+                                                    <%= testcase.token%>
+                                                </td>
+                                                <td>
+                                                    <%= testcase.acmount%>
+                                                </td>
+                                                <td>
+                                                    <a href="https://testnet.incognito.org/tx/<%= testcase.tx%>" target="_blank">
+                                                        <%if (testcase.tx !== null) { %>
+                                                            <%= testcase.tx.substring(0,5)+'...'+testcase.tx.substring(testcase.tx.length-5,testcase.tx.length)%>
+                                                                <% }else{%>
+                                                                    <%= testcase.tx%>
+                                                                        <%} %>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <%= testcase.tx_out_chain%>
+                                                </td>
+                                                <td>
+                                                    <%= testcase.result%>
+                                                </td>
+                                                <td>
+                                                    <%= testcase.create_at%>
+                                                </td>
+                                                <td>
+                                                    <%= testcase.update_at%>
+                                                </td>
+                                                <td>
+                                                    <%= testcase.err_count%>
+                                                </td>
+                                                <td>
+                                                    <%= testcase.tx_is_In_Block%>
+                                                </td>
+                                                <td>
+                                                    <%= testcase.tx_out_chain_success%>
+                                                </td>
+                                                <td>
+                                                    <%= testcase.step%>
+                                                </td>
+                                                <td><button>Retry</button>
+                                                    <button onclick="toggle_visibility('detail-popup-<%= testcase.id%>')">Detail</button>
+                                            </tr>
+                                            <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
             </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>id</th>
-                      <th>name</th>
-                      <th>type</th>
-                      <th>token</th>
-                      <th>acmount</th>
-                      <th>tx</th>
-                      <th>tx_out_chain</th>
-                      <th>result</th>
-                      <th>create_at</th>
-                      <th>update_at</th>
-                      <th>err_count</th>
-                      <th>tx_is_In_Block</th>
-                      <th>tx_out_chain_success</th>
-                      <th>step</th>
-                      <th>ACTION</th>
-                    </tr>
-                  </thead>
+            <!-- End of Main Content -->
 
-                  <tbody>
-                    <% testcases.forEach((testcase , index) => { %>
-                    <tr>
-                      <td><%= testcase.id%></td>
-                      <td><%= testcase.name%></td>          
-                      <td><%= testcase.type%></td>
-                      <td><%= testcase.token%></td>
-                      <td><%= testcase.acmount%></td>
-                      <td><%if (testcase.tx !== null) { %>
-                        <%= testcase.tx.substring(0,5)+'...'+testcase.tx.substring(testcase.tx.length-5,testcase.tx.length)%>
-                        <% }else{%>
-                        <%= testcase.tx%>
-                      <%} %></td>  
-                      <td><%= testcase.tx_out_chain%></td>
-                      <td><%= testcase.result%></td>
-                      <td><%= testcase.create_at%></td>
-                      <td><%= testcase.update_at%></td>
-                      <td><%= testcase.err_count%></td>
-                      <td><%= testcase.tx_is_In_Block%></td>
-                      <td><%= testcase.tx_out_chain_success%></td>
-                      <td><%= testcase.step%></td>
-                      <th><button>Retry</button></th>
-                    </tr>
-                    <% }) %>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
 
         </div>
-        <!-- /.container-fluid -->
-
-      </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2020</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
+        <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Page Wrapper -->
 
-  </div>
-  <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
+
+    <% testcases.forEach((testcase , index) => { %>
+        <div class="popup-position" id="detail-popup-<%= testcase.id%>">
+            <div class="popup-wrapper">
+                <div id="popup-container">
+                    <button style="float: right;" onclick="toggle_visibility('detail-popup-<%= testcase.id%>-open');">Close
+          Popup</button>
+                    <h5>Testcase Detail</h5>
+                    <form>
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                        <%= testcase.id%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>name</td>
+                                    <td>
+                                        <%= testcase.name%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>type</td>
+                                    <td>
+                                        <%= testcase.type%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>amount</td>
+                                    <td>
+                                        <%= testcase.amount%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>PRV_fee</td>
+                                    <td>
+                                        <%= testcase.PRV_fee%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>token_fee</td>
+                                    <td>
+                                        <%= testcase.token_fee%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>tx</td>
+                                    <td>
+                                        <a href="https://testnet.incognito.org/tx/<%= testcase.tx%>" target="_blank">
+                                            <div style="height:100%;width:100%">
+                                                <%= testcase.tx%>
+                                            </div>
+                                        </a>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>tx_out_chain</td>
+                                    <td>
+                                        <%= testcase.tx_out_chain%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>result</td>
+                                    <td>
+                                        <%= testcase.result%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>create_at</td>
+                                    <td>
+                                        <%= testcase.create_at%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>update_at</td>
+                                    <td>
+                                        <%= testcase.update_at%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>err_count</td>
+                                    <td>
+                                        <%= testcase.err_count%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>tx_is_In_Block</td>
+                                    <td>
+                                        <%= testcase.tx_is_In_Block%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>tx_out_chain_success</td>
+                                    <td>
+                                        <%= testcase.tx_out_chain_success%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>step</td>
+                                    <td>
+                                        <%= testcase.step%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ac1 name</td>
+                                    <td>
+                                        <%= testcase.ac1_name%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ac1 send_PRV_balance</td>
+                                    <td>
+                                        <%= testcase.send_PRV_balance%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ac1 send_token_balance</td>
+                                    <td>
+                                        <%= testcase.send_token_balance%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ac1 after_send_PRV_balance</td>
+                                    <td>
+                                        <%= testcase.after_send_PRV_balance%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ac1 after_send_token_balance</td>
+                                    <td>
+                                        <%= testcase.after_send_token_balance%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ac1 private key</td>
+                                    <td>
+                                        <%= testcase.ac1_private_key%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ac1 address</td>
+                                    <td>
+                                        <%= testcase.ac1_address%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ac2 name</td>
+                                    <td>
+                                        <%= testcase.ac2_name%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ac2 receive_PRV_balance</td>
+                                    <td>
+                                        <%= testcase.receive_PRV_balance%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ac2 receive_token_balance</td>
+                                    <td>
+                                        <%= testcase.receive_token_balance%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ac2 after_receive_PRV_balance</td>
+                                    <td>
+                                        <%= testcase.after_receive_PRV_balance%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ac2 after_receive_token_balance</td>
+                                    <td>
+                                        <%= testcase.after_receive_token_balance%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ac2 private key</td>
+                                    <td>
+                                        <%= testcase.ac2_private_key%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ac2 address</td>
+                                    <td>
+                                        <%= testcase.ac2_address%>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+
+                </div>
+            </div>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
+        <% }) %>
+
 </body>
+
+
+<script>
+    //click detail to open pop-up
+    function toggle_visibility(id) {
+        var modal = document.getElementById(id);
+
+        console.log('modal : ' + modal)
+        if (modal.style.display == '' || modal.style.display == 'none') {
+            modal.style.display = 'block';
+            modal.id = modal.id + "-open";
+        } else {
+            modal.id = modal.id.replace('-open', '')
+            modal.style.display = 'none';
+        }
+    }
+    //click out to close pop-up
+    window.onclick = function(event) {
+        var modal = document.querySelector('[id$="-open"]');
+        if (event.target == modal) {
+            modal.id = modal.id.replace('-open', '')
+            modal.style.display = "none ";
+        }
+    }
+
+    //hit ESC to close pop-up
+    window.addEventListener('keydown', (function(event) {
+        var modal = document.querySelector('[id$="-open"]');
+        if (event.key === 'Escape') {
+            modal.id = modal.id.replace('-open', '')
+            modal.style.display = "none ";
+        }
+    }));
+</script>
